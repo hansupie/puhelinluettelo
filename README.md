@@ -1,1 +1,1 @@
-https://hansun-puhelinluettelo.herokuapp.com/api/persons
+https://hansun-puhelinluettelo.herokuapp.com/
