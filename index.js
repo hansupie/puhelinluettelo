@@ -25,16 +25,11 @@ app.get('/api/persons', (req, res) => {
   })
 })
 
-// app.get('/api/persons/:id', (req, res) => {
-//   const id = Number(req.params.id)
-//   const person = persons.find(person => person.id === id)
-
-//   if (person) {
-//     res.json(person)
-//   } else {
-//     res.status(404).end()
-//   }
-// })
+app.get('/api/persons/:id', (req, res) => {
+  Person.findById(req.params.id).then(person => {
+    res.json(person)
+  })
+})
 
 // app.delete('/api/persons/:id', (req, res) => {
 //   const id = Number(req.params.id)
@@ -47,32 +42,36 @@ app.get('/api/persons', (req, res) => {
 //   return Math.floor(Math.random() * 1000)
 // }
 
-// app.post('/api/persons', jsonParser, (req, res) => {
-//   const body = req.body
+app.post('/api/persons', jsonParser, (req, res) => {
+  const body = req.body
 
-//   if (!body.name || !body.number) {
-//     return res.status(400).json({
-//       error: 'information missing'
-//     })
-//   }
+  if (!body.name || !body.number) {
+    return res.status(400).json({
+      error: 'information missing'
+    })
+  }
 
-//   if (persons.some(person => person.name === body.name)) {
-//     return res.status(400).json({
-//       error: 'name must be unique'
-//     })
-//   }
+  // if (persons.some(person => person.name === body.name)) {
+  //   return res.status(400).json({
+  //     error: 'name must be unique'
+  //   })
+  // }
 
-//   const person = {
-//     id: generateId(),
-//     name: body.name,
-//     number: body.number,
-//   }
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  })
 
+  person.save().then(savedPerson => {
+    res.json(savedPerson)
+  })
+})
 
-//   persons = persons.concat(person)
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({ error: 'unknown endpoint' })
+}
 
-//   res.json(person)
-// })
+app.use(unknownEndpoint)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
