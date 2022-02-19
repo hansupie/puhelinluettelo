@@ -1,1 +1,1 @@
-DELETE https://hansun-puhelinluettelo.herokuapp.com/api/persons/5
+DELETE http://localhost:3001/api/persons/621134b9c69d266696e86bf6

@@ -31,12 +31,12 @@ app.get('/api/persons/:id', (req, res) => {
   })
 })
 
-// app.delete('/api/persons/:id', (req, res) => {
-//   const id = Number(req.params.id)
-//   persons = persons.filter(person => person.id !== id)
-
-//   res.status(204).end()
-// })
+app.delete('/api/persons/:id', (req, res) => {
+  Person.findByIdAndRemove(req.params.id)
+    .then(result => {
+      res.status(204).end()
+    })
+})
 
 // const generateId = () => {
 //   return Math.floor(Math.random() * 1000)
