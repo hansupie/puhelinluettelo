@@ -13,11 +13,15 @@ morgan.token('body', (res) => { return JSON.stringify(res.body)})
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(express.static('build'))
 
-// app.get('/info', (req, res) => {
-//   const date = new Date()
-//   res.send(`<p>Phonebook has info for ${persons.length} people</p>
-//             <p>${date}</p>`)
-// })
+app.get('/info', (req, res, next) => {
+  const date = new Date()
+  Person.find({})
+    .then(result => {
+      res.send(`<p>Phonebook has info for ${result.length} people</p>
+            <p>${date}</p>`)
+    })
+    .catch(error => next(error))
+})
 
 app.get('/api/persons', (req, res, next) => {
   Person.find({})
