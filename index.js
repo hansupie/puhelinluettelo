@@ -74,7 +74,7 @@ app.put('/api/persons/:id', jsonParser, (req, res, next) => {
     number: body.number,
   }
 
-  Person.findByIdAndUpdate(req.params.id, person)
+  Person.findByIdAndUpdate(req.params.id, person, {new: true})
     .then(updatedPerson => {
       res.json(updatedPerson)
     })
